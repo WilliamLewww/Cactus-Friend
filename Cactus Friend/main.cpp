@@ -1,4 +1,5 @@
 #include "main.h"
+#include <iostream>
 
 void Update(int gameTime);
 void Render(SDL_Window* window, SDL_GLContext context);
@@ -39,13 +40,20 @@ int main(int argc, char *argv[]) {
 }
 
 void Update(int gameTime) {
+
 }
 
 void Render(SDL_Window* window, SDL_GLContext context) {
 	SDL_GL_MakeCurrent(window, context);
-	glClearColor(0.39, 0.58, 0.94, 1);
+	glClearColor(ConvertColor(69), ConvertColor(177), ConvertColor(237), 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 
+	DrawInterface();
+
 	SDL_GL_SwapWindow(window);
+}
+
+float ConvertColor(int rgbValue) {
+	return (float)rgbValue / 255;
 }

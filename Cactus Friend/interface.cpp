@@ -16,18 +16,23 @@ void DrawInterface() {
 	DrawRectFill(Vector2(2, 2), 163, 8, color);
 }
 
-bool moveWindow;
 Vector2 fixedMousePosition;
+bool moveWindow, initialClick;
 void UpdateInterface(SDL_Window* window) {
 	POINT p;
 	GetCursorPos(&p);
 
-	if (mouseY < 11 && leftButtonDown == true && moveWindow == false && CheckMouseOnEntity(Vector2(SCREENWIDTH - 10, 2), 8, 8) == false) {
+	if (mouseY < 11 && leftButtonPress == true && moveWindow == false && CheckMouseOnEntity(Vector2(SCREENWIDTH - 10, 2), 8, 8) == false) {
+		initialClick = true;
+	}
+
+	if (mouseY < 11 && initialClick == true && moveWindow == false && CheckMouseOnEntity(Vector2(SCREENWIDTH - 10, 2), 8, 8) == false) {
 		fixedMousePosition = Vector2(mouseX, mouseY);
 		moveWindow = true;
 	}
 	else {
 		if (leftButtonDown == false) { moveWindow = false; }
+		initialClick = false;
 	}
 
 	if (CheckMouseOnEntity(Vector2(SCREENWIDTH - 10, 2), 8, 8) == true && leftButtonPress == true) {

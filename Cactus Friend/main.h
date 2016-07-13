@@ -7,4 +7,6 @@
 static const int SCREENWIDTH = 176, SCREENHEIGHT = 200;
 static SDL_Window* displayWindow;
 
+extern bool isRunning;
+
 float ConvertColor(int rgbValue);

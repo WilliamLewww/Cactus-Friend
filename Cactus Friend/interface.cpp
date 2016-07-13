@@ -15,3 +15,26 @@ void DrawInterface() {
 	color[0] = ConvertColor(175); color[1] = ConvertColor(175); color[2] = ConvertColor(175);
 	DrawRectFill(Vector2(2, 2), 163, 8, color);
 }
+
+bool moveWindow;
+Vector2 fixedMousePosition;
+void UpdateInterface(SDL_Window* window) {
+	POINT p;
+	GetCursorPos(&p);
+
+	if (mouseY < 11 && leftButtonDown == true && moveWindow == false && CheckMouseOnEntity(Vector2(SCREENWIDTH - 10, 2), 8, 8) == false) {
+		fixedMousePosition = Vector2(mouseX, mouseY);
+		moveWindow = true;
+	}
+	else {
+		if (leftButtonDown == false) { moveWindow = false; }
+	}
+
+	if (CheckMouseOnEntity(Vector2(SCREENWIDTH - 10, 2), 8, 8) == true && leftButtonPress == true) {
+		isRunning = false;
+	}
+
+	if (moveWindow == true) {
+		SDL_SetWindowPosition(window, p.x - fixedMousePosition.x, p.y - fixedMousePosition.y);
+	}
+}

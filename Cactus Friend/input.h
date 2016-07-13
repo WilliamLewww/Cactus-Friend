@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <vector>
 #include <algorithm>
+#include "vector2.h"
 
 void GetKeys(SDL_Event event);
 void RemoveInitialPress();
@@ -9,5 +10,7 @@ extern std::vector<SDL_Keycode> keyList;
 extern std::vector<SDL_Keycode> pressKeyList;
 
 void GetButtons(SDL_Event event);
-extern bool leftButtonDown;
+extern bool leftButtonDown, leftButtonPress;
 extern int mouseX, mouseY;
+
+bool CheckMouseOnEntity(Vector2 position, int width, int height);

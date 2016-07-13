@@ -3,7 +3,7 @@
 std::vector<SDL_Keycode> keyList;
 std::vector<SDL_Keycode> pressKeyList;
 
-bool leftButtonDown;
+bool leftButtonDown, leftButtonPress;
 int mouseX, mouseY;
 
 void GetKeys(SDL_Event event) {
@@ -27,6 +27,7 @@ void GetButtons(SDL_Event event) {
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
 		if (event.button.button == SDL_BUTTON_LEFT) {
 			leftButtonDown = true;
+			leftButtonPress = true;
 		}
 	}
 
@@ -40,4 +41,12 @@ void GetButtons(SDL_Event event) {
 		mouseX = event.motion.x;
 		mouseY = event.motion.y;
 	}
+}
+
+bool CheckMouseOnEntity(Vector2 position, int width, int height) {
+	if (mouseX >= position.x && mouseX <= position.x + width && mouseY >= position.y && mouseY <= position.y + height) {
+		return true;
+	}
+
+	return false;
 }

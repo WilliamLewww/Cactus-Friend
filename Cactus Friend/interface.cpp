@@ -9,11 +9,16 @@ void DrawInterface() {
 	DrawRect(Vector2(0, 12), SCREENWIDTH, SCREENHEIGHT - 13, 1, color);
 	DrawRect(Vector2(1, 13), SCREENWIDTH - 2, SCREENHEIGHT - 15, 1, color);
 	DrawRect(Vector2(2, 14), SCREENWIDTH - 4, SCREENHEIGHT - 17, 1, color);
+	DrawLine(Vector2(3, 182), Vector2(SCREENWIDTH - 3, 182), 1, color);
+	DrawLine(Vector2(3, 183), Vector2(SCREENWIDTH - 3, 183), 1, color);
+	DrawLine(Vector2(3, 184), Vector2(SCREENWIDTH - 3, 184), 1, color);
 	color[0] = ConvertColor(160); color[1] = ConvertColor(160); color[2] = ConvertColor(160);
 	DrawRect(Vector2(1, 1), SCREENWIDTH - 2, 9, 1, color);
 	DrawLine(Vector2(SCREENWIDTH - 10, 2), Vector2(SCREENWIDTH - 10, 10), 1, color);
 	color[0] = ConvertColor(175); color[1] = ConvertColor(175); color[2] = ConvertColor(175);
 	DrawRectFill(Vector2(2, 2), 163, 8, color);
+	color[0] = ConvertColor(138); color[1] = ConvertColor(138); color[2] = ConvertColor(138);
+	DrawRectFill(Vector2(3, 185), SCREENWIDTH - 6, 12, color);
 }
 
 Vector2 fixedMousePosition;

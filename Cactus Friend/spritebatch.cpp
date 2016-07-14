@@ -1,5 +1,34 @@
 #include "spritebatch.h"
 
+int* GetPixelBMP(unsigned char* image, int x, int y, int width, int height) {
+	int pixel[3] = { image[y * width + x], image[y * width + x + 1], image[y * width + x + 2] };
+	return pixel;
+}
+
+//The color of pixel (i, j) is stored at data[j * width + i], data[j * width + i + 1] and data[j * width + i + 2]
+unsigned char* ReadBMP(char* path, int &width, int &height) {
+	FILE* file = fopen(path, "rb");
+	unsigned char header[54];
+	fread(header, sizeof(unsigned char), 54, file); // read the 54-byte header
+
+											   // extract image height and width from header
+	width = *(int*)&header[18];
+	height = *(int*)&header[22];
+
+	int size = 3 * width * height;
+	unsigned char* data = new unsigned char[size]; // allocate 3 bytes per pixel
+	fread(data, sizeof(unsigned char), size, file); // read the rest of the data at once
+	fclose(file);
+
+	for (int x = 0; x < size; x += 3) {
+		unsigned char temp = data[x];
+		data[x] = data[x + 2];
+		data[x + 2] = temp;
+	}
+
+	return data;
+}
+
 GLuint LoadTexture(const char* path) {
 	GLuint texture = SOIL_load_OGL_texture(
 		path,

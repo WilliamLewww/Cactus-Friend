@@ -14,6 +14,10 @@ int main(int argc, char *argv[]) {
 	context = SDL_GL_CreateContext(displayWindow);
 	glOrtho(-SCREENWIDTH / 2, SCREENWIDTH / 2, SCREENHEIGHT / 2, -SCREENHEIGHT / 2, 0, 1);
 
+	int width, height;
+	unsigned char* fontImage = ReadBMP("../Content/exit.bmp", width, height);
+	LoadFont(fontImage, width, height);
+
 	while (isRunning) {
 		RemoveInitialPress();
 		leftButtonPress = false;

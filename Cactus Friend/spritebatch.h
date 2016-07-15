@@ -11,5 +11,5 @@ void DrawRect(Vector2 position, int width, int height, float thickness, double c
 void DrawRectFill(Vector2 position, int width, int height, double color[3]);
 void DrawRect(GLuint texture, Vector2 position, int width, int height);
 
-int* GetPixelBMP(unsigned char* image, int x, int y, int width, int height);
+int* GetPixelBMP(unsigned char* image, int x, int y, int width);
 unsigned char* ReadBMP(char* path, int &width, int &height);

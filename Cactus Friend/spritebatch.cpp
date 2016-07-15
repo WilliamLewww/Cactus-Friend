@@ -1,31 +1,40 @@
 #include "spritebatch.h"
 
-int* GetPixelBMP(unsigned char* image, int x, int y, int width, int height) {
+int* GetPixelBMP(unsigned char* image, int x, int y, int width) {
 	int pixel[3] = { image[y * width + x], image[y * width + x + 1], image[y * width + x + 2] };
 	return pixel;
 }
 
 //The color of pixel (i, j) is stored at data[j * width + i], data[j * width + i + 1] and data[j * width + i + 2]
 unsigned char* ReadBMP(char* path, int &width, int &height) {
-	FILE* file = fopen(path, "rb");
-	unsigned char header[54];
-	fread(header, sizeof(unsigned char), 54, file); // read the 54-byte header
+	FILE* f = fopen(path, "rb");
+
+	unsigned char info[54];
+	fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
 
 											   // extract image height and width from header
-	width = *(int*)&header[18];
-	height = *(int*)&header[22];
+	width = *(int*)&info[18];
+	height = *(int*)&info[22];
+	int data_offset = *(int*)(&info[0x0A]);
+	fseek(f, (long int)(data_offset - 54), SEEK_CUR);
 
-	int size = 3 * width * height;
-	unsigned char* data = new unsigned char[size]; // allocate 3 bytes per pixel
-	fread(data, sizeof(unsigned char), size, file); // read the rest of the data at once
-	fclose(file);
+	int row_padded = (width * 3 + 3) & (~3);
+	unsigned char* data = new unsigned char[row_padded];
+	unsigned char tmp;
 
-	for (int x = 0; x < size; x += 3) {
-		unsigned char temp = data[x];
-		data[x] = data[x + 2];
-		data[x + 2] = temp;
+	for (int i = 0; i < height; i++)
+	{
+		fread(data, sizeof(unsigned char), row_padded, f);
+		for (int j = 0; j < width * 3; j += 3)
+		{
+			// Convert (B, G, R) to (R, G, B)
+			tmp = data[j];
+			data[j] = data[j + 2];
+			data[j + 2] = tmp;
+
+			std::cout << "R: " << (int)data[j] << " G: " << (int)data[j + 1] << " B: " << (int)data[j + 2] << std::endl;
+		}
 	}
-
 	return data;
 }
 

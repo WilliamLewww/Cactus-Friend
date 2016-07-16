@@ -1,11 +1,10 @@
 #include "spritebatch.h"
 
 int* GetPixelBMP(unsigned char* image, int x, int y, int width) {
-	int pixel[3] = { image[y * width + x], image[y * width + x + 1], image[y * width + x + 2] };
+	int pixel[3] = { image[(y * width + x) * 3], image[(y * width + x + 1) * 3], image[(y * width + x + 2) * 3] };
 	return pixel;
 }
 
-//The color of pixel (i, j) is stored at data[j * width + i], data[j * width + i + 1] and data[j * width + i + 2]
 unsigned char* ReadBMP(char* path, int &width, int &height) {
 	FILE* f = fopen(path, "rb");
 
@@ -22,6 +21,9 @@ unsigned char* ReadBMP(char* path, int &width, int &height) {
 	unsigned char* data = new unsigned char[row_padded];
 	unsigned char tmp;
 
+	unsigned char* newData = new unsigned char[width * height * 3];
+	int increment = 0;
+
 	for (int i = 0; i < height; i++)
 	{
 		fread(data, sizeof(unsigned char), row_padded, f);
@@ -32,10 +34,14 @@ unsigned char* ReadBMP(char* path, int &width, int &height) {
 			data[j] = data[j + 2];
 			data[j + 2] = tmp;
 
-			std::cout << "R: " << (int)data[j] << " G: " << (int)data[j + 1] << " B: " << (int)data[j + 2] << std::endl;
+			newData[increment] = data[j];
+			newData[increment + 1] = data[j + 1];
+			newData[increment + 2] = data[j + 2];
+
+			increment += 3;
 		}
 	}
-	return data;
+	return newData;
 }
 
 GLuint LoadTexture(const char* path) {

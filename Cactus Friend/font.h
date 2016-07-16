@@ -3,6 +3,9 @@
 #include <vector>
 
 struct Character {
+	int characterIndex;
+
+	std::vector<Vector2> pixelList;
 	int coordinate[4];
 };
 
@@ -10,4 +13,6 @@ struct Font {
 	std::vector<Character> characterList;
 };
 
-Font LoadFont(unsigned char* image, int width, int height);
+void DrawFont();
+Font LoadFontCoordinate(Font &font, unsigned char* image, int width, int height);
+void DrawString(Font font);

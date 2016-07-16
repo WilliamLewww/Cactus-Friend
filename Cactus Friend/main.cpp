@@ -1,6 +1,7 @@
 #include "main.h"
 #include <iostream>
 
+void LoadContent();
 void Update(int gameTime);
 void Render(SDL_Window* window, SDL_GLContext context);
 
@@ -14,9 +15,7 @@ int main(int argc, char *argv[]) {
 	context = SDL_GL_CreateContext(displayWindow);
 	glOrtho(-SCREENWIDTH / 2, SCREENWIDTH / 2, SCREENHEIGHT / 2, -SCREENHEIGHT / 2, 0, 1);
 
-	int width, height;
-	unsigned char* fontImage = ReadBMP("../Content/exit.bmp", width, height);
-	LoadFont(fontImage, width, height);
+	LoadContent();
 
 	while (isRunning) {
 		RemoveInitialPress();
@@ -45,6 +44,10 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
+void LoadContent() {
+
+}
+
 void Update(int gameTime) {
 	UpdateInterface(displayWindow);
 }
@@ -56,6 +59,7 @@ void Render(SDL_Window* window, SDL_GLContext context) {
 	glMatrixMode(GL_PROJECTION);
 
 	DrawInterface();
+	DrawFont();
 
 	SDL_GL_SwapWindow(window);
 }

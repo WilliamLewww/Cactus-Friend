@@ -53,7 +53,7 @@ Font LoadFontPixel(Font &font, unsigned char* image, int width, int height) {
 
 		for (int y = 0; y < height; y++) {
 			if (*GetPixelBMP(image, x, y, width) > 0) {
-				character.pixelList.push_back(Vector2(x, y));
+				character.pixelList.push_back(Vector2(x, height - y));
 				a = true;
 			}
 		}
@@ -72,7 +72,7 @@ void DrawString(Font font) {
 		for (auto &pixel : character.pixelList) {
 			glColor3f(1, 1, 1);
 			glBegin(GL_POINTS);
-			glVertex2i(pixel.x, pixel.y);
+			glVertex2i(pixel.x - (SCREENWIDTH / 2), pixel.y - (SCREENHEIGHT / 2));
 			glEnd();
 		}
 	}

@@ -2,10 +2,16 @@
 #include "spritebatch.h"
 #include <vector>
 
+struct Pixel {
+	Vector2 position;
+
+	int r, g, b;
+};
+
 struct Character {
 	int characterIndex;
 
-	std::vector<Vector2> pixelList;
+	std::vector<Pixel> pixelList;
 	int coordinate[4];
 };
 

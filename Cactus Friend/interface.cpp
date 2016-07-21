@@ -19,6 +19,8 @@ void DrawInterface() {
 	DrawRectFill(Vector2(2, 2), 163, 8, color);
 	color[0] = ConvertColor(138); color[1] = ConvertColor(138); color[2] = ConvertColor(138);
 	DrawRectFill(Vector2(3, 185), SCREENWIDTH - 6, 12, color);
+
+	DrawString(font, Vector2(3, 184), "Points:");
 }
 
 Vector2 fixedMousePosition;

@@ -1,5 +1,4 @@
 #include "main.h"
-#include <iostream>
 
 void LoadContent();
 void Update(int gameTime);
@@ -45,7 +44,7 @@ int main(int argc, char *argv[]) {
 }
 
 void LoadContent() {
-
+	LoadFont();
 }
 
 void Update(int gameTime) {
@@ -59,7 +58,6 @@ void Render(SDL_Window* window, SDL_GLContext context) {
 	glMatrixMode(GL_PROJECTION);
 
 	DrawInterface();
-	DrawFont();
 
 	SDL_GL_SwapWindow(window);
 }

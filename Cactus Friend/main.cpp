@@ -43,8 +43,14 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 
+TextureEntity enemy;
+int enemyWidth, enemyHeight;
 void LoadContent() {
 	LoadFont();
+
+	unsigned char* enemyTexture = ReadBMP("../Content/spritesheet.bmp", enemyWidth, enemyHeight);
+	enemy = GetTextureEntity(enemyTexture, Vector2(0, 0), 500, 21, 20);
+	std::cout << enemyHeight;
 }
 
 void Update(int gameTime) {
@@ -58,6 +64,7 @@ void Render(SDL_Window* window, SDL_GLContext context) {
 	glMatrixMode(GL_PROJECTION);
 
 	DrawInterface();
+	DrawTextureEntity(enemy, Vector2(10, 10));
 
 	SDL_GL_SwapWindow(window);
 }

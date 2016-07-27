@@ -1,5 +1,38 @@
 #include "spritebatch.h"
 
+void DrawTextureEntity(TextureEntity entity, Vector2 position) {
+	for (auto &pixel : entity.pixelList) {
+		glColor3f(ConvertColor(pixel.r), ConvertColor(pixel.g), ConvertColor(pixel.b));
+		glBegin(GL_POINTS);
+		glVertex2d(pixel.position.x - (SCREENWIDTH / 2) + position.x, pixel.position.y - (SCREENHEIGHT / 2) + position.y);
+		glEnd();
+	}
+}
+
+TextureEntity GetTextureEntity(unsigned char* image, Vector2 position, int imageWidth, int width, int height) {
+	TextureEntity entity;
+	entity.width = width;
+	entity.height = height;
+
+	TexturePixel pixel;
+
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			std::cout << *GetPixelBMP(image, x + position.x, y + position.y, imageWidth) << std::endl;
+			if (*GetPixelBMP(image, x + position.x, y + position.y, imageWidth) < 255) {
+				pixel.r = *GetPixelBMP(image, x + position.x, y + position.y, imageWidth);
+				pixel.g = *(GetPixelBMP(image, x + position.x, y + position.y, imageWidth) + 1);
+				pixel.b = *(GetPixelBMP(image, x + position.x, y + position.y, imageWidth) + 2);
+
+				pixel.position = Vector2(x, y);
+				entity.pixelList.push_back(pixel);
+			}
+		}
+	}
+
+	return entity;
+}
+
 int* GetPixelBMP(unsigned char* image, int x, int y, int width) {
 	int pixel[3] = { image[(y * width + x) * 3], image[(y * width + x + 1) * 3], image[(y * width + x + 2) * 3] };
 	return pixel;
